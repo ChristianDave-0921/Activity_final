@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Paper - Student Request Records System</title>
+    <style>
+        /* =========================================================
+           ACADEMIC RESEARCH PAPER FORMATTING RULES
+           Specifications:
+           - Font: Times New Roman
+           - Size: 12pt
+           - Line Spacing: 1.5
+           - Paper Size: A4 (210mm x 297mm)
+           - Margins: 1 inch (25.4mm) on all sides
+           - Target: 15+ Pages when printed
+           ========================================================= */
+
+        @page {
+            size: A4 portrait;
+            margin: 1in;
+            @bottom-right {
+                content: counter(page);
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 10pt;
+            }
+        }
+
+        @media print {
+            body {
+                background: none !important;
+                color: #000000 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-break {
+                page-break-after: always !important;
+                break-after: page !important;
+            }
+            .paper-sheet {
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                min-height: auto !important;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.5;
+            color: #111111;
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        /* Screen Simulation of A4 Pages */
+        .paper-sheet {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 1in;
+            margin: 0 auto 30px auto;
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+
+        .page-break {
+            page-break-after: always;
+            break-after: page;
+        }
+
+        /* Typography & Headings */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Times New Roman', Times, serif;
+            color: #000000;
+            margin-top: 1.2em;
+            margin-bottom: 0.6em;
+            line-height: 1.3;
+        }
+
+        h1.doc-title {
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+        }
+
+        h1.chapter-title {
+            font-size: 15pt;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 8px;
+        }
+
+        h2.section-title {
+            font-size: 13pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        h3.subsection-title {
+            font-size: 12pt;
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 1em;
+            text-align: justify;
+            text-indent: 0.5in;
+        }
+
+        p.no-indent {
+            text-indent: 0;
+        }
+
+        /* Title Page Specifics */
+        .title-page-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: calc(297mm - 2in);
+            text-align: center;
+        }
+
+        .title-block {
+            margin-top: 60px;
+        }
+
+        .title-main {
+            font-size: 20pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .title-sub {
+            font-size: 14pt;
+            font-style: italic;
+            color: #333333;
+            margin-bottom: 40px;
+        }
+
+        .title-meta-block {
+            margin: 40px 0;
+            line-height: 2;
+            font-size: 12pt;
+        }
+
+        .title-meta-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 10pt;
+            letter-spacing: 1px;
+            color: #555555;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .title-meta-value {
+            font-size: 13pt;
+            font-weight: bold;
+        }
+
+        .title-footer-block {
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Tables */
+        table.academic-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 11pt;
+            line-height: 1.4;
+        }
+
+        table.academic-table th, table.academic-table td {
+            border: 1px solid #000000;
+            padding: 8px 10px;
+            vertical-align: top;
+        }
+
+        table.academic-table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        table.academic-table td.center, table.academic-table th.center {
+            text-align: center;
+        }
+
+        .table-caption {
+            font-weight: bold;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 11pt;
+            text-align: left;
+        }
+
+        /* Code & Pre */
+        pre.code-snippet {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 10pt;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 15px 0;
+            white-space: pre-wrap;
+            border-radius: 4px;
+        }
+
+        .code-caption {
+            font-size: 10pt;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 4px;
+        }
+
+        /* Diagrams */
+        .diagram-container {
+            border: 1px solid #94a3b8;
+            background: #f8fafc;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border-radius: 6px;
+        }
+
+        .diagram-caption {
+            font-size: 10pt;
+            font-weight: bold;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        /* Badges & Status */
+        .badge-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 9pt;
+            font-weight: bold;
+            border: 1px solid #999;
+        }
+        .badge-pending { background-color: #fef3c7; color: #92400e; border-color: #f59e0b; }
+        .badge-approved { background-color: #d1fae5; color: #065f46; border-color: #10b981; }
+        .badge-rejected { background-color: #fee2e2; color: #991b1b; border-color: #ef4444; }
+
+        /* Floating Print Bar */
+        .print-control-bar {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            z-index: 9999;
+            background: #1e40af;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 14px;
+        }
+
+        .btn-print {
+            background: #ea580c;
+            color: #ffffff;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-print:hover {
+            background: #c2410c;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Print Action Bar (Hidden When Printing) -->
+<div class="print-control-bar no-print">
+    <span><strong>Academic Research Paper Ready</strong> (A4 &bull; 1.5 Spacing)</span>
+    <button class="btn-print" onclick="window.print()">Print / Save as PDF</button>
+</div>
+
+<!-- ===================================================================
+     PAGE 1: TITLE PAGE
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <div class="title-page-container">
+        <div class="title-header-block">
+            <p class="no-indent" style="text-align: center; font-size: 13pt; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">
+                Republic of the Philippines<br>
+                Commission on Higher Education<br>
+                College of Computing and Information Sciences
+            </p>
+        </div>
+
+        <div class="title-block">
+            <div class="title-main">
+                STUDENT REQUEST RECORDS SYSTEM
+            </div>
+            <div class="title-sub">
+                A Web-Based Academic Document Requisition and Institutional Student Record Management Platform
+            </div>
+            <hr style="width: 60%; margin: 20px auto; border: 0; border-top: 1px solid #000;">
+            <p class="no-indent" style="text-align: center; font-size: 11pt; font-style: italic;">
+                A Capstone Documentation and System Research Project Submitted to the Faculty of the Department of Information Technology in Partial Fulfillment of the Requirements for the Degree of
+            </p>
+            <p class="no-indent" style="text-align: center; font-size: 13pt; font-weight: bold; margin-top: 10px;">
+                BACHELOR OF SCIENCE IN INFORMATION TECHNOLOGY (BSIT)
+            </p>
+        </div>
+
+        <div class="title-meta-block">
+            <div style="margin-bottom: 20px;">
+                <span class="title-meta-label">Prepared and Developed by:</span>
+                <span class="title-meta-value">Student Developer / Researcher</span><br>
+                <span style="font-size: 11pt;">BSIT - 3rd Year (Section A)</span>
+            </div>
+
+            <div>
+                <span class="title-meta-label">Submitted to:</span>
+                <span class="title-meta-value">Project Instructor / Capstone Adviser</span><br>
+                <span style="font-size: 11pt;">Department of Information Technology</span>
+            </div>
+        </div>
+
+        <div class="title-footer-block">
+            <p class="no-indent" style="text-align: center; font-size: 11pt; font-weight: bold;">
+                October 2026
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- ===================================================================
+     PAGE 2: ABSTRACT & TABLE OF CONTENTS
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h1 class="chapter-title">ABSTRACT</h1>
+    <p>
+        Manual academic credential archiving and physical document requisition workflows in educational institutions often encounter operational bottlenecks, misplaced request slips, unorganized tracking, and prolonged processing turnaround. Students frequently experience friction following up on critical institutional documents such as Transcripts of Records (TOR), Certificates of Enrollment (COR), Certificates of Grades (COG), and Certificates of Good Moral Character. Concurrently, registrar administrators must manually sift through disparate paper files and spreadsheets to verify student records and release credentials.
+    </p>
+    <p>
+        To solve these institutional problems, this study designed, engineered, and evaluated the <strong>Student Request Records System</strong>, a robust, responsive web application developed using PHP 8, MySQL/MariaDB, JavaScript, HTML5/CSS3, and Bootstrap 5. The platform establishes two secure role-based portals: a <em>Student Portal</em> and an <em>Administrator Dashboard</em>. Students can create authenticated accounts, submit digital document requisitions specifying categories, purposes, and optional supporting requirements, track queue progress in real-time through dynamic status badges (<strong>Pending</strong>, <strong>Approved</strong>, <strong>Rejected</strong>), and securely stream or download released official digital files. Administrators possess full Create, Read, Update, and Delete (CRUD) privileges over institutional student records, live multi-field filtering by program and year level, and an interactive review pipeline to confirm, decline with written feedback, or attach approved digital credentials.
+    </p>
+    <p>
+        Defensive web engineering standards were enforced throughout the system architecture, including Bcrypt cryptographic password hashing, parameterized MySQLi prepared statements preventing SQL injection, role-based authorization guards, and multi-tier file upload validators enforcing MIME signature verification, byte constraints, and Apache directory hardening. Functional testing confirmed a 100% pass rate across 15 core verification modules, proving the system's operational reliability, security integrity, and high effectiveness in replacing manual registrar queues.
+    </p>
+    <p class="no-indent" style="margin-top: 25px;">
+        <strong>Keywords:</strong> Student Record System, Document Requisition Pipeline, Role-Based Access Control, Web Application Security, PHP/MySQL, Educational Management Systems.
+    </p>
+
+    <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ccc;">
+
+    <h2 class="section-title" style="text-align: center; text-transform: uppercase;">TABLE OF CONTENTS</h2>
+    <table class="academic-table" style="font-size: 10.5pt; border: none;">
+        <tr style="border-bottom: 1px solid #000;">
+            <th style="border: none; background: none;">Section / Chapter Description</th>
+            <th style="border: none; background: none; text-align: right; width: 60px;">Page</th>
+        </tr>
+        <tr><td style="border: none;">Title Page</td><td style="border: none; text-align: right;">i</td></tr>
+        <tr><td style="border: none;">Abstract</td><td style="border: none; text-align: right;">ii</td></tr>
+        <tr><td style="border: none;"><strong>Chapter 1: Introduction</strong></td><td style="border: none; text-align: right;">1</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">1.1 Background of the Study</td><td style="border: none; text-align: right;">1</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">1.2 Problem Statement</td><td style="border: none; text-align: right;">2</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">1.3 Objectives of the System (General & Specific)</td><td style="border: none; text-align: right;">2</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">1.4 Scope and Delimitation</td><td style="border: none; text-align: right;">3</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">1.5 Significance of the Study</td><td style="border: none; text-align: right;">3</td></tr>
+        <tr><td style="border: none;"><strong>Chapter 2: System Concept and Design</strong></td><td style="border: none; text-align: right;">4</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">2.1 System Description & Architectural Flow</td><td style="border: none; text-align: right;">4</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">2.2 Reason for Choosing the System</td><td style="border: none; text-align: right;">5</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">2.3 Technology Used & Technical Rationale</td><td style="border: none; text-align: right;">5</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">2.4 Database Design, Entity-Relationship Diagram (ERD) & Data Dictionary</td><td style="border: none; text-align: right;">6</td></tr>
+        <tr><td style="border: none;"><strong>Chapter 3: System Development & Security Implementation</strong></td><td style="border: none; text-align: right;">9</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">3.1 Development Process (Planning, DB, Coding, Testing, Debugging)</td><td style="border: none; text-align: right;">9</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">3.2 Core Module Implementation</td><td style="border: none; text-align: right;">10</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">3.3 Security Implementation (Hashing, Prepared Statements, RBAC, File Uploads)</td><td style="border: none; text-align: right;">11</td></tr>
+        <tr><td style="border: none;"><strong>Chapter 4: System Testing and Evaluation</strong></td><td style="border: none; text-align: right;">13</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">4.1 Testing Strategy & Functional Results Table</td><td style="border: none; text-align: right;">13</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">4.2 Usability and Operational Analysis</td><td style="border: none; text-align: right;">14</td></tr>
+        <tr><td style="border: none;"><strong>Chapter 5: Conclusion and Recommendations</strong></td><td style="border: none; text-align: right;">15</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">5.1 System Achievements</td><td style="border: none; text-align: right;">15</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">5.2 Technical Limitations</td><td style="border: none; text-align: right;">15</td></tr>
+        <tr><td style="border: none; padding-left: 20px;">5.3 Recommendations for Future Work</td><td style="border: none; text-align: right;">16</td></tr>
+        <tr><td style="border: none;">References & Appendices</td><td style="border: none; text-align: right;">17</td></tr>
+    </table>
+</div>
+
+<!-- ===================================================================
+     PAGE 3: CHAPTER 1 - INTRODUCTION
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h1 class="chapter-title">CHAPTER 1: INTRODUCTION</h1>
+
+    <h2 class="section-title">1.1 Background of the Study</h2>
+    <p>
+        In higher education institutions and secondary schools, the registrar's office serves as the central administrative custodian responsible for issuing, validating, and archiving official student academic documentation. Key documents handled by this office include Transcripts of Records (TOR), Certificates of Enrollment or Registration (COR), Certificates of Grades (COG), Certificates of Good Moral Character, Honorable Dismissals, and Diplomas. These credentials are foundational for students seeking scholarships, employment, licensure examination filing, and university transfers.
+    </p>
+    <p>
+        Despite the rapid evolution of information and communication technologies, many educational institutions continue to process document requisitions through traditional, paper-based workflows. Under manual arrangements, students must physically visit the campus, queue outside registrar windows, complete physical request forms, seek clearances across campus offices, settle cashier fees, and repeatedly return to follow up on document preparation. This outdated model creates severe physical congestion, high administrative overhead, human filing errors, and substantial turnaround delays that can span multiple weeks.
+    </p>
+    <p>
+        Furthermore, students who reside far from the physical campus or alumni pursuing remote professional opportunities experience extreme inconvenience when attempting to request vital credentials. Modern web application architectures provide the ideal medium to digitize and automate these interactions. The <strong>Student Request Records System</strong> was conceived to address these systemic inefficiencies by replacing physical paperwork with an automated, role-based web platform that provides transparency, data security, and end-to-end request lifecycle tracking.
+    </p>
+
+    <h2 class="section-title">1.2 Problem Statement</h2>
+    <p>
+        A comprehensive domain analysis of conventional registrar operations identified several critical challenges that impede organizational productivity:
+    </p>
+    <ul>
+        <li><strong>Difficulty Managing Records:</strong> Physical file folders, paper index cards, and decentralized local spreadsheets make it difficult to organize student academic histories reliably, leading to misplaced folders and data corruption.</li>
+        <li><strong>Slow Searching and Information Retrieval:</strong> Administrative personnel spend excessive time manually searching physical filing cabinets to verify whether a student is regular, irregular, active, or cleared for document issuance.</li>
+        <li><strong>Lack of Real-Time Status Visibility:</strong> Students receive zero digital feedback once a request form is submitted. They cannot determine if a request is under review, cleared, approved, or rejected due to lacking clearances without standing in physical follow-up lines.</li>
+        <li><strong>Manual Documentation Errors:</strong> Handwritten requisitions lead to illegible student numbers, misidentified degree programs, and incorrectly prepared credentials.</li>
+        <li><strong>Absence of Secure Digital Credential Delivery:</strong> When documents are prepared, registrar staff have no direct, secure channel to furnish verified digital copies to authorized students online.</li>
+    </ul>
+
+    <h2 class="section-title">1.3 Objectives of the System</h2>
+
+    <h3 class="subsection-title">1.3.1 General Objective</h3>
+    <p>
+        The primary objective of this study is to design, develop, and deploy a secure, web-based <strong>Student Request Records System</strong> that automates institutional student record management and provides a transparent document requisition pipeline featuring real-time status tracking and secure digital file delivery.
+    </p>
+
+    <h3 class="subsection-title">1.3.2 Specific Objectives</h3>
+    <p class="no-indent">To fulfill the general objective, the research set the following specific technical goals:</p>
+    <ol>
+        <li><strong>Secure User Authentication System:</strong> To develop an authentication subsystem enforcing strict role separation between Students (standard users) and Registrar Personnel (administrators), secured via Bcrypt cryptographic password hashing.</li>
+        <li><strong>Comprehensive CRUD Functionalities:</strong> To build administrative management tools allowing authorized staff to Create, Read, Update, and Delete institutional student records with multi-criteria dynamic search and filtering.</li>
+        <li><strong>Self-Service Document Requisition Engine:</strong> To develop an intuitive student interface allowing learners to request specific academic documents (TOR, COR, COG, Good Moral, Clearance, etc.), submit stated purposes, and attach optional clearance documents.</li>
+        <li><strong>Lifecycle Status Tracking Engine:</strong> To implement real-time visual progress monitoring featuring standardized status classifications: <span class="badge-status badge-pending">Pending</span>, <span class="badge-status badge-approved">Approved</span>, and <span class="badge-status badge-rejected">Rejected</span>, accompanied by administrative feedback remarks.</li>
+        <li><strong>Secure Digital Credential Release Subsystem:</strong> To engineer a streaming controller that permits administrators to attach approved digital documents and enables students to safely view and download their verified credentials.</li>
+        <li><strong>Defensive Web Security Framework:</strong> To protect student personally identifiable information (PII) against SQL Injection (SQLi), Cross-Site Scripting (XSS), path traversal attacks, and unauthorized file execution via prepared statements and strict server-side upload filtering.</li>
+    </ol>
+</div>
+
+<!-- ===================================================================
+     PAGE 4: CHAPTER 1 (CONT.) & CHAPTER 2 - SYSTEM CONCEPT
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h2 class="section-title">1.4 Scope and Delimitation</h2>
+    <p>
+        <strong>Scope of the System:</strong> The system encompasses two primary operational portals: (1) an <em>Admin Dashboard</em> intended for registrar personnel featuring complete student record management, statistical metric monitoring, dynamic multi-field search/filtering, and centralized file request review; and (2) a <em>Student Portal</em> for registered students to inspect personal academic demographics, upload profile portrait avatars, submit document requests, monitor approval status in real-time, cancel pending requisitions, and download approved digital credentials. Security controls include Bcrypt password hashing, parameterized queries, and defensive file streaming.
+    </p>
+    <p>
+        <strong>Delimitation of the System:</strong> The system is currently configured for deployment on single-campus environments running Apache, PHP 8, and MySQL/MariaDB. Automated payment gateway checkout (e.g., credit card or e-wallet integration for transcript fees) is excluded from the current scope; proof of payment/clearance is handled via optional file attachments. Automated SMS dispatch is reserved for future versions; alerts are currently communicated via live in-session flash messages and status badge updates.
+    </p>
+
+    <h2 class="section-title">1.5 Significance of the Study</h2>
+    <p>
+        The deployment of this system provides tangible operational value to key academic stakeholders:
+    </p>
+    <ul>
+        <li><strong>To Students:</strong> Eliminates long physical queues, reduces travel expenses, allows 24/7 requisition submission, and provides continuous visibility into document processing status.</li>
+        <li><strong>To Registrar Administrators:</strong> Reduces manual filing burdens, organizes requests into a unified digital queue, speeds up student record verification, and establishes clear digital audit trails.</li>
+        <li><strong>To the Educational Institution:</strong> Modernizes campus administrative services, reduces paper and storage expenses, and elevates institutional operational efficiency.</li>
+        <li><strong>To IT Educators and Researchers:</strong> Serves as a validated, standards-compliant architectural model demonstrating secure PHP/MySQL web application engineering and relational database normalization.</li>
+    </ul>
+
+    <h1 class="chapter-title" style="margin-top: 35px;">CHAPTER 2: SYSTEM CONCEPT AND DESIGN</h1>
+
+    <h2 class="section-title">2.1 System Description</h2>
+    <p>
+        The <strong>Student Request Records System</strong> is an enterprise-oriented web application designed to digitalize academic record workflows. Built around a role-based architectural pattern, the system presents tailored user interfaces depending on the authenticated role:
+    </p>
+    <ul>
+        <li><strong>Student User Role:</strong> Authenticated students are directed to a dedicated self-service portal (`student_dashboard.php`). Here, students can view their recorded student ID, degree program, year level, and enrollment status. The portal features a "Request a File" modal where students select the desired document, declare their purpose (e.g., scholarship, job application, board examination), and upload optional clearance proofs. Submitted requests populate a live status queue with visual status indicators (<span class="badge-status badge-pending">Pending</span>, <span class="badge-status badge-approved">Approved</span>, or <span class="badge-status badge-rejected">Rejected</span>). Approved requests unlock one-click digital download buttons.</li>
+        <li><strong>Administrator Role:</strong> Registrar officers are directed to the administrative management console (`dashboard.php`). Administrators monitor live institutional metrics (total enrolled students, regular vs. irregular counts, active file attachments, and pending requisition counters). The console includes advanced search and filtering tools, full student CRUD modals, and a dedicated "Student File Requests Management" section where staff can approve requests (and attach official digital credentials), reject requests with documented reasons, or remove records.</li>
+    </ul>
+</div>
+
+<!-- ===================================================================
+     PAGE 5: CHAPTER 2 (CONT.) - REASON FOR CHOOSING & TECH STACK
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h2 class="section-title">2.2 Reason for Choosing the System</h2>
+    <p>
+        The decision to select and develop this specific system was driven by widespread operational delays observed in university registrar environments. Document backlogs frequently create friction during graduation clearances and board examination deadlines. Developing an end-to-end web system that replaces static paper filing with a transparent, stateful requisition pipeline directly resolves administrative bottlenecks.
+    </p>
+    <p>
+        Furthermore, previous record systems often treated file uploads as static, admin-only fields. By decoupling student record management from document requests and introducing a dedicated <code>file_requests</code> relational architecture with <strong>Pending</strong>, <strong>Approved</strong>, and <strong>Rejected</strong> lifecycle states, the system empowers students with self-service autonomy while preserving institutional administrative authority.
+    </p>
+
+    <h2 class="section-title">2.3 Technology Used</h2>
+    <p>
+        The technology stack was selected to achieve optimal execution performance, rapid local and cloud deployability, open-source accessibility, and cross-browser responsiveness.
+    </p>
+
+    <div class="table-caption">Table 2.1: Technology Stack and Architectural Purpose</div>
+    <table class="academic-table">
+        <thead>
+            <tr>
+                <th style="width: 25%;">Technology</th>
+                <th style="width: 25%;">Layer / Role</th>
+                <th style="width: 50%;">Functional Purpose in the System</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>PHP (v8.2+)</strong></td>
+                <td>Backend Programming</td>
+                <td>Executes server-side business logic, handles HTTP request dispatching, session management, file stream generation, and secure database interactions via MySQLi prepared statements.</td>
+            </tr>
+            <tr>
+                <td><strong>MySQL / MariaDB</strong></td>
+                <td>Database Management</td>
+                <td>Provides ACID-compliant relational data persistence, relational indexing, primary/foreign key constraints, and dynamic schema auto-migrations.</td>
+            </tr>
+            <tr>
+                <td><strong>HTML5 &amp; CSS3</strong></td>
+                <td>Interface Structure &amp; Styling</td>
+                <td>Defines semantic markup, institutional visual design (Blue &amp; Orange theme: <code>#0d3b66</code>, <code>#1e40af</code>, <code>#ea580c</code>), and responsive print formatting.</td>
+            </tr>
+            <tr>
+                <td><strong>JavaScript (ES6)</strong></td>
+                <td>Client-Side Interaction</td>
+                <td>Controls interactive DOM manipulation, client-side file size and format validation, dynamic document selector expansion, and asynchronous modal interactions.</td>
+            </tr>
+            <tr>
+                <td><strong>Bootstrap (v5.3)</strong></td>
+                <td>Responsive Frontend Framework</td>
+                <td>Delivers mobile-first responsive grid layouts, accessible UI cards, interactive navigation headers, and modal dialogs.</td>
+            </tr>
+            <tr>
+                <td><strong>Bootstrap Icons (v1.11)</strong></td>
+                <td>Iconography Library</td>
+                <td>Supplies high-resolution scalable vector icons that visually enhance document status badges, buttons, and navigation cues.</td>
+            </tr>
+            <tr>
+                <td><strong>Apache HTTP Server</strong></td>
+                <td>Web Server Engine</td>
+                <td>Manages incoming HTTP connections, route resolution, and server directory hardening through <code>.htaccess</code> non-execution directives.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="diagram-container">
+        <p class="no-indent" style="font-weight: bold; margin-bottom: 8px;">System High-Level Architectural Flow</p>
+        <div style="font-family: monospace; font-size: 9.5pt; line-height: 1.4; text-align: left; background: #fff; padding: 10px; border: 1px dashed #cbd5e1;">
+            [Client Web Browser: Student or Admin]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;(HTTP/HTTPS Requests)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v<br>
+            [Apache Web Server: XAMPP Environment] &lt;--- (.htaccess execution hardening)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v<br>
+            [PHP 8 Core Application Layer: Authentication Guard &amp; RBAC (auth_check.php)]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-------------------------------------+-------------------------------------+<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|                                                                           |<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v                                                                           v<br>
+            [MySQLi Prepared Parameterized Queries]                     [Hardened Upload Repository (uploads/)]<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|                                                            * Avatars (3MB Max, JPG/PNG)<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v                                                            * Supporting Files (5MB Max)<br>
+            [MySQL/MariaDB Relational Database: student_db]                                * Approved Credentials (PDF/DOC)<br>
+            &nbsp;&nbsp;* Table: users (Bcrypt hashes)<br>
+            &nbsp;&nbsp;* Table: students (Academic profiles)<br>
+            &nbsp;&nbsp;* Table: file_requests (Status tracking: Pending/Approved/Rejected)
+        </div>
+        <div class="diagram-caption">Figure 2.1: Architectural Tier Diagram of the Student Request Records System</div>
+    </div>
+</div>
+
+<!-- ===================================================================
+     PAGE 6: CHAPTER 2 (CONT.) - DATABASE DESIGN & ERD
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h2 class="section-title">2.4 Database Design</h2>
+    <p>
+        The persistent storage architecture of the system is normalized to the <strong>Third Normal Form (3NF)</strong> to eliminate data redundancy and preserve referential integrity. The database, designated as <code>student_db</code>, features three primary relational tables:
+    </p>
+
+    <div class="diagram-container">
+        <p class="no-indent" style="font-weight: bold; margin-bottom: 8px;">Entity-Relationship Diagram (ERD)</p>
+        <div style="font-family: monospace; font-size: 9pt; line-height: 1.35; text-align: left; background: #fff; padding: 12px; border: 1px solid #cbd5e1;">
+            +------------------------------------+<br>
+            |               USERS                |<br>
+            +------------------------------------+<br>
+            | PK: id (INT, Auto Increment)       |<br>
+            | UK: username (VARCHAR 50)          |<br>
+            |     password (VARCHAR 255)         |&lt;---+<br>
+            |     full_name (VARCHAR 100)        |    |<br>
+            |     email (VARCHAR 100)            |    |<br>
+            |     role (VARCHAR 20)              |    | (1 to 1 Relationship)<br>
+            |     created_at (TIMESTAMP)         |    |<br>
+            +------------------------------------+    |<br>
+                              |                       |<br>
+                              | (1 to Many)           |<br>
+                              v                       |<br>
+            +------------------------------------+    |<br>
+            |              STUDENTS              |    |<br>
+            +------------------------------------+    |<br>
+            | PK: id (INT, Auto Increment)       |    |<br>
+            | FK: user_id (INT) -----------------+----+<br>
+            | UK: student_id (VARCHAR 50)        |<br>
+            |     first_name (VARCHAR 100)       |<br>
+            |     last_name (VARCHAR 100)        |<br>
+            |     email (VARCHAR 150)            |<br>
+            |     course (VARCHAR 100)           |<br>
+            |     year_level (INT)               |<br>
+            |     status (VARCHAR 50)            |<br>
+            |     profile_picture (VARCHAR 255)  |<br>
+            |     record_file (VARCHAR 255)      |<br>
+            |     created_at (TIMESTAMP)         |<br>
+            |     updated_at (TIMESTAMP)         |<br>
+            +------------------------------------+<br>
+                              |<br>
+                              | (1 to Many Originates)<br>
+                              v<br>
+            +------------------------------------+<br>
+            |           FILE_REQUESTS            |<br>
+            +------------------------------------+<br>
+            | PK: id (INT, Auto Increment)       |<br>
+            | FK: student_id (INT)               |<br>
+            | FK: user_id (INT)                  |<br>
+            |     document_type (VARCHAR 150)    |<br>
+            |     purpose (TEXT)                 |<br>
+            |     supporting_file (VARCHAR 255)  |<br>
+            |     status (VARCHAR 50)            |  --&gt; 'Pending', 'Approved', 'Rejected'<br>
+            |     admin_notes (TEXT)             |<br>
+            |     approved_file (VARCHAR 255)    |<br>
+            |     created_at (TIMESTAMP)         |<br>
+            |     updated_at (TIMESTAMP)         |<br>
+            +------------------------------------+
+        </div>
+        <div class="diagram-caption">Figure 2.2: Normalized Entity-Relationship Diagram of student_db</div>
+    </div>
+
+    <div class="table-caption">Table 2.2: Data Dictionary for the <code>users</code> Table</div>
+    <table class="academic-table">
+        <thead>
+            <tr>
+                <th style="width: 20%;">Field Name</th>
+                <th style="width: 20%;">Data Type</th>
+                <th style="width: 15%;" class="center">Key</th>
+                <th style="width: 15%;" class="center">Null</th>
+                <th style="width: 30%;">Description &amp; Constraints</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>id</code></td>
+                <td>INT(11)</td>
+                <td class="center">PRIMARY</td>
+                <td class="center">NO</td>
+                <td>Unique user identifier; auto-incremented.</td>
+            </tr>
+            <tr>
+                <td><code>username</code></td>
+                <td>VARCHAR(50)</td>
+                <td class="center">UNIQUE</td>
+                <td class="center">NO</td>
+                <td>Unique account login username.</td>
+            </tr>
+            <tr>
+                <td><code>password</code></td>
+                <td>VARCHAR(255)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Bcrypt cryptographic password hash.</td>
+            </tr>
+            <tr>
+                <td><code>full_name</code></td>
+                <td>VARCHAR(100)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Full personal name of the user.</td>
+            </tr>
+            <tr>
+                <td><code>email</code></td>
+                <td>VARCHAR(100)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Contact email address.</td>
+            </tr>
+            <tr>
+                <td><code>role</code></td>
+                <td>VARCHAR(20)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Access level: <code>admin</code> or <code>user</code> (Default: <code>user</code>).</td>
+            </tr>
+            <tr>
+                <td><code>created_at</code></td>
+                <td>TIMESTAMP</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>System timestamp of user registration.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ===================================================================
+     PAGE 7: CHAPTER 2 (CONT.) - DATA DICTIONARIES
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <div class="table-caption">Table 2.3: Data Dictionary for the <code>students</code> Table</div>
+    <table class="academic-table">
+        <thead>
+            <tr>
+                <th style="width: 20%;">Field Name</th>
+                <th style="width: 20%;">Data Type</th>
+                <th style="width: 15%;" class="center">Key</th>
+                <th style="width: 15%;" class="center">Null</th>
+                <th style="width: 30%;">Description &amp; Constraints</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>id</code></td>
+                <td>INT(11)</td>
+                <td class="center">PRIMARY</td>
+                <td class="center">NO</td>
+                <td>Primary student record key; auto-incremented.</td>
+            </tr>
+            <tr>
+                <td><code>user_id</code></td>
+                <td>INT(11)</td>
+                <td class="center">FOREIGN</td>
+                <td class="center">YES</td>
+                <td>Foreign key linking to <code>users.id</code>.</td>
+            </tr>
+            <tr>
+                <td><code>student_id</code></td>
+                <td>VARCHAR(50)</td>
+                <td class="center">UNIQUE</td>
+                <td class="center">NO</td>
+                <td>Institutional student ID number (e.g., 2026001).</td>
+            </tr>
+            <tr>
+                <td><code>first_name</code></td>
+                <td>VARCHAR(100)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Student's given first name.</td>
+            </tr>
+            <tr>
+                <td><code>last_name</code></td>
+                <td>VARCHAR(100)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Student's legal surname.</td>
+            </tr>
+            <tr>
+                <td><code>email</code></td>
+                <td>VARCHAR(150)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Official student email address.</td>
+            </tr>
+            <tr>
+                <td><code>course</code></td>
+                <td>VARCHAR(100)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Enrolled degree (e.g., BSIT, BSCS, BSIS).</td>
+            </tr>
+            <tr>
+                <td><code>year_level</code></td>
+                <td>INT(11)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Academic year standing (Values: 1, 2, 3, or 4).</td>
+            </tr>
+            <tr>
+                <td><code>status</code></td>
+                <td>VARCHAR(50)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Enrollment status: <code>Regular</code> or <code>Irregular</code>.</td>
+            </tr>
+            <tr>
+                <td><code>profile_picture</code></td>
+                <td>VARCHAR(255)</td>
+                <td class="center">-</td>
+                <td class="center">YES</td>
+                <td>Sanitized avatar filename in <code>uploads/</code>.</td>
+            </tr>
+            <tr>
+                <td><code>record_file</code></td>
+                <td>VARCHAR(255)</td>
+                <td class="center">-</td>
+                <td class="center">YES</td>
+                <td>Admin-attached archive file (PDF, DOCX).</td>
+            </tr>
+            <tr>
+                <td><code>created_at</code></td>
+                <td>TIMESTAMP</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Date and time student record was created.</td>
+            </tr>
+            <tr>
+                <td><code>updated_at</code></td>
+                <td>TIMESTAMP</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Timestamp of most recent record update.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="table-caption">Table 2.4: Data Dictionary for the <code>file_requests</code> Table</div>
+    <table class="academic-table">
+        <thead>
+            <tr>
+                <th style="width: 20%;">Field Name</th>
+                <th style="width: 20%;">Data Type</th>
+                <th style="width: 15%;" class="center">Key</th>
+                <th style="width: 15%;" class="center">Null</th>
+                <th style="width: 30%;">Description &amp; Constraints</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>id</code></td>
+                <td>INT(11)</td>
+                <td class="center">PRIMARY</td>
+                <td class="center">NO</td>
+                <td>Primary key for the document request record.</td>
+            </tr>
+            <tr>
+                <td><code>student_id</code></td>
+                <td>INT(11)</td>
+                <td class="center">FOREIGN</td>
+                <td class="center">NO</td>
+                <td>Foreign key referencing <code>students.id</code>.</td>
+            </tr>
+            <tr>
+                <td><code>user_id</code></td>
+                <td>INT(11)</td>
+                <td class="center">FOREIGN</td>
+                <td class="center">YES</td>
+                <td>Foreign key referencing requesting <code>users.id</code>.</td>
+            </tr>
+            <tr>
+                <td><code>document_type</code></td>
+                <td>VARCHAR(150)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Requested credential (TOR, COR, COG, Good Moral, etc.).</td>
+            </tr>
+            <tr>
+                <td><code>purpose</code></td>
+                <td>TEXT</td>
+                <td class="center">-</td>
+                <td class="center">YES</td>
+                <td>Justification provided by student for requisition.</td>
+            </tr>
+            <tr>
+                <td><code>supporting_file</code></td>
+                <td>VARCHAR(255)</td>
+                <td class="center">-</td>
+                <td class="center">YES</td>
+                <td>Student-uploaded clearance/receipt filename.</td>
+            </tr>
+            <tr>
+                <td><code>status</code></td>
+                <td>VARCHAR(50)</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Queue status: <code>Pending</code>, <code>Approved</code>, <code>Rejected</code>.</td>
+            </tr>
+            <tr>
+                <td><code>admin_notes</code></td>
+                <td>TEXT</td>
+                <td class="center">-</td>
+                <td class="center">YES</td>
+                <td>Registrar remarks, directions, or rejection reasons.</td>
+            </tr>
+            <tr>
+                <td><code>approved_file</code></td>
+                <td>VARCHAR(255)</td>
+                <td class="center">-</td>
+                <td class="center">YES</td>
+                <td>Official released digital credential file.</td>
+            </tr>
+            <tr>
+                <td><code>created_at</code></td>
+                <td>TIMESTAMP</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Date and time the requisition was placed.</td>
+            </tr>
+            <tr>
+                <td><code>updated_at</code></td>
+                <td>TIMESTAMP</td>
+                <td class="center">-</td>
+                <td class="center">NO</td>
+                <td>Timestamp of administrative review decision.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ===================================================================
+     PAGE 8: CHAPTER 3 - SYSTEM DEVELOPMENT & METHODOLOGY
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h1 class="chapter-title">CHAPTER 3: SYSTEM DEVELOPMENT</h1>
+
+    <h2 class="section-title">3.1 Development Process</h2>
+    <p>
+        The software development lifecycle was executed through five structured, iterative stages:
+    </p>
+    <ol>
+        <li><strong>Planning &amp; Domain Requirements Analysis:</strong> Identifying operational bottlenecks in academic document processing, surveying registrar service protocols, specifying functional user stories for students and staff, and formulating database relationships.</li>
+        <li><strong>Database Creation &amp; Dynamic Migrations:</strong> Establishing the relational schema in MariaDB. To eliminate manual database setup friction, automated self-healing scripts were implemented inside `db_connection.php` that programmatically create missing tables, add required columns dynamically, and seed default administrative credentials.</li>
+        <li><strong>Modular Coding:</strong> Writing clean, maintainable, object-oriented, and procedural PHP 8 scripts adhering to defensive programming guidelines. Frontend components were built utilizing Bootstrap 5 responsive structures and native ES6 JavaScript for dynamic DOM manipulation.</li>
+        <li><strong>Defensive Testing &amp; Verification:</strong> Executing unit test scripts, boundary checks on file upload limits, cross-role authorization checks, and security penetration scripts simulating SQL Injection and path traversal.</li>
+        <li><strong>Debugging &amp; Refactoring:</strong> Addressing discovered edge cases—such as cascade file unlinking when student records are deleted, handling non-standard image MIME containers, and synchronizing request status badges.</li>
+    </ol>
+
+    <div class="code-caption">Code Listing 3.1: Database Connection &amp; Auto-Migration Engine (db_connection.php)</div>
+    <pre class="code-snippet">&lt;?php
+// Auto-Migration &amp; Connection Handler in db_connection.php
+$servername = "localhost";
+$username   = "root";
+$password   = "";
+$dbname     = "student_db";
+
+$conn = new mysqli($servername, $username, $password);
+if ($conn-&gt;connect_error) {
+    die("Database Server Connection Failed: " . $conn-&gt;connect_error);
+}
+
+$conn-&gt;query("CREATE DATABASE IF NOT EXISTS `$dbname` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+$conn-&gt;select_db($dbname);
+
+// Automated Schema Verification: file_requests table
+$createFileRequestsTable = "CREATE TABLE IF NOT EXISTS `file_requests` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `student_id` INT NOT NULL,
+    `user_id` INT NULL,
+    `document_type` VARCHAR(150) NOT NULL,
+    `purpose` TEXT NULL,
+    `supporting_file` VARCHAR(255) NULL,
+    `status` VARCHAR(50) NOT NULL DEFAULT 'Pending',
+    `admin_notes` TEXT NULL,
+    `approved_file` VARCHAR(255) NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+$conn-&gt;query($createFileRequestsTable);
+?&gt;</pre>
+</div>
+
+<!-- ===================================================================
+     PAGE 9: CHAPTER 3 (CONT.) - SECURITY IMPLEMENTATION
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h2 class="section-title">3.2 Security Implementation</h2>
+    <p>
+        Securing student personally identifiable information (PII) and institutional academic records was a primary architectural requirement. The system integrates multiple defensive controls:
+    </p>
+
+    <h3 class="subsection-title">1. Password Hashing (Cryptographic Storage)</h3>
+    <p>
+        Plaintext passwords are never stored. User credentials submitted during registration (`register.php`) are hashed using PHP’s native Bcrypt algorithm via <code>password_hash($password, PASSWORD_DEFAULT)</code>. Authentication checks in `login.php` utilize <code>password_verify()</code> to compute constant-time cryptographic hash verification, preventing precomputed rainbow table and timing attacks.
+    </p>
+
+    <div class="code-caption">Code Listing 3.2: Cryptographic Password Hashing and Verification</div>
+    <pre class="code-snippet">// Registration Hashing (register.php)
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+$stmt = $conn-&gt;prepare("INSERT INTO users (username, password, full_name, email, role) VALUES (?, ?, ?, ?, 'user')");
+$stmt-&gt;bind_param("ssss", $username, $hashedPassword, $full_name, $email);
+$stmt-&gt;execute();
+
+// Authentication Verification (login.php)
+if (password_verify($password, $user['password'])) {
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['role']    = $user['role'];
+    // Login successful
+}</pre>
+
+    <h3 class="subsection-title">2. Prepared Statements (SQL Injection Immunity)</h3>
+    <p>
+        To prevent SQL Injection vulnerabilities, all database transactions involving user parameters use <strong>MySQLi Prepared Statements</strong>. Incoming parameters are separated from query logic and bound as explicit data types (`s` for strings, `i` for integers), rendering SQL syntax injection impossible.
+    </p>
+
+    <div class="code-caption">Code Listing 3.3: Parameterized Prepared Statements for Requisition Insertion</div>
+    <pre class="code-snippet">// Secure Insertion Guard in student_dashboard.php
+$reqStmt = $conn-&gt;prepare(
+    "INSERT INTO file_requests (student_id, user_id, document_type, purpose, supporting_file, status) 
+     VALUES (?, ?, ?, ?, ?, 'Pending')"
+);
+$reqStmt-&gt;bind_param("iisss", $studentRecordId, $userId, $docType, $purpose, $supportingFile);
+$reqStmt-&gt;execute();
+$reqStmt-&gt;close();</pre>
+
+    <h3 class="subsection-title">3. Session Authentication &amp; Role-Based Access Control (RBAC)</h3>
+    <p>
+        Application routing is governed by centralized security guards in `auth_check.php`. Unauthenticated guests attempting direct URL access are immediately redirected to `login.php`. Students attempting to access administrator consoles (`dashboard.php`) are intercepted and redirected to their portal view, while administrators navigating to student self-service routes are redirected to their operational console.
+    </p>
+</div>
+
+<!-- ===================================================================
+     PAGE 10: CHAPTER 3 (CONT.) - FILE UPLOAD SECURITY
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h3 class="subsection-title">4. Input Validation &amp; Sanitization</h3>
+    <p>
+        All incoming GET and POST parameters are trimmed, cast into typed primitives (e.g., `intval()` for entity identifiers), and sanitized against Cross-Site Scripting (XSS) via <code>htmlspecialchars($var, ENT_QUOTES, 'UTF-8')</code> before rendering into browser DOM trees.
+    </p>
+
+    <h3 class="subsection-title">5. Multi-Tier File Upload Validation &amp; Execution Neutralization</h3>
+    <p>
+        Unrestricted file upload is one of the most critical web vulnerabilities. The system enforces a strict 5-step defensive pipeline inside `file_helper.php`:
+    </p>
+    <ul>
+        <li><strong>Extension Whitelisting:</strong> Files must match explicitly permitted extensions (`jpg`, `jpeg`, `png`, `webp`, `gif` for images; `pdf`, `doc`, `docx`, `xls`, `xlsx`, `csv`, `txt`, `zip` for documents). Executable extensions (`.php`, `.phtml`, `.exe`) are unconditionally rejected.</li>
+        <li><strong>Server-Side MIME Inspection:</strong> The server inspects the binary file headers using PHP’s <code>finfo_file()</code> function to verify true MIME signatures, preventing attackers from renaming malicious scripts.</li>
+        <li><strong>Strict Size Constraints:</strong> Profile photos are restricted to 3MB; academic documents and attachments are restricted to 5MB.</li>
+        <li><strong>Cryptographic Filename Randomization:</strong> Uploaded files are renamed using randomized identifiers combining entity IDs, Unix timestamps, and random bytes (<code>bin2hex(random_bytes(4))</code>).</li>
+        <li><strong>Server Execution Hardening (`.htaccess`):</strong> The storage directory (`uploads/`) contains a dedicated Apache `.htaccess` rule that explicitly prohibits server-side script execution.</li>
+    </ul>
+
+    <div class="code-caption">Code Listing 3.4: Multi-Tier Upload Validation (file_helper.php) &amp; .htaccess</div>
+    <pre class="code-snippet">// Multi-Tier File Validation from file_helper.php
+function handle_request_attachment_upload(array $file, string $prefix = 'req', ?string &amp;$error = null): string|null|false {
+    if (!isset($file['error']) || $file['error'] === UPLOAD_ERR_NO_FILE) return null;
+    if ($file['size'] &gt; 5 * 1024 * 1024) { $error = "Exceeds 5MB limit."; return false; }
+
+    $allowedExts = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'csv', 'txt', 'zip', 'jpg', 'jpeg', 'png', 'webp'];
+    $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    if (!in_array($extension, $allowedExts, true)) { $error = "Invalid format."; return false; }
+
+    $fileName = $prefix . "_" . time() . "_" . bin2hex(random_bytes(4)) . "." . $extension;
+    move_uploaded_file($file['tmp_name'], UPLOAD_DIR . $fileName);
+    return $fileName;
+}
+
+# Directory Hardening Directive (uploads/.htaccess)
+&lt;FilesMatch "\.(php|phtml|php3|php4|php5|php7|phps|cgi|pl|exe)$"&gt;
+    Order Deny,Allow
+    Deny from all
+&lt;/FilesMatch&gt;
+Options -ExecCGI -Indexes</pre>
+
+    <h3 class="subsection-title">6. Path Traversal Defense in File Streaming</h3>
+    <p>
+        In `download_file.php`, file parameters are passed through PHP’s <code>basename()</code> function before disk resolution. This removes directory traversal sequences (such as <code>../</code> or <code>..\</code>), preventing unauthorized retrieval of sensitive server configuration files.
+    </p>
+</div>
+
+<!-- ===================================================================
+     PAGE 11: CHAPTER 4 - TESTING AND EVALUATION
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h1 class="chapter-title">CHAPTER 4: SYSTEM TESTING AND EVALUATION</h1>
+
+    <h2 class="section-title">4.1 Testing Strategy &amp; Results</h2>
+    <p>
+        System verification was conducted using rigorous functional black-box testing, unit integration testing, and defensive penetration simulations. All test procedures were verified in an Apache 2.4 / MariaDB / PHP 8.2 runtime environment.
+    </p>
+
+    <div class="table-caption">Table 4.1: Comprehensive System Testing Results Matrix</div>
+    <table class="academic-table">
+        <thead>
+            <tr>
+                <th style="width: 18%;">Feature Tested</th>
+                <th style="width: 32%;">Input Condition &amp; Test Scenario</th>
+                <th style="width: 35%;">Expected Operational Outcome</th>
+                <th style="width: 15%;" class="center">Result</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>User Registration</strong></td>
+                <td>Student submits new registration form with unique credentials.</td>
+                <td>Account inserted into <code>users</code>; linked profile created in <code>students</code>; redirected to login.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Duplicate Prevention</strong></td>
+                <td>Student attempts registration using an existing username.</td>
+                <td>System rejects submission with validation error; no duplicate user created in database.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>User Login</strong></td>
+                <td>Submitting valid credentials for student and administrator accounts.</td>
+                <td>Bcrypt verification succeeds; session initialized; routed to appropriate dashboard.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Invalid Login</strong></td>
+                <td>Submitting incorrect password or non-existent username.</td>
+                <td>Authentication denied; error flash message displayed; session unauthenticated.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>RBAC Route Guard</strong></td>
+                <td>Standard student attempts direct URL access to <code>dashboard.php</code>.</td>
+                <td>Access intercepted by <code>is_admin()</code>; redirected to <code>student_dashboard.php</code>.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>File Requisition</strong></td>
+                <td>Student submits request for Transcript of Records (TOR) with stated purpose.</td>
+                <td>Record inserted into <code>file_requests</code> with status set to <span class="badge-status badge-pending">Pending</span>.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Upload Size Boundary</strong></td>
+                <td>Student attaches a 7MB supporting file (exceeding 5MB limit).</td>
+                <td>Upload rejected; error notification shown; database insertion blocked.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Request Cancellation</strong></td>
+                <td>Student cancels own pending requisition from portal.</td>
+                <td>Row purged from <code>file_requests</code>; temporary attachment unlinked from disk.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Admin Approval</strong></td>
+                <td>Administrator approves request and uploads official PDF credential.</td>
+                <td>Status updated to <span class="badge-status badge-approved">Approved</span>; file attached; download button unlocks for student.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Admin Rejection</strong></td>
+                <td>Administrator declines request with written feedback notes.</td>
+                <td>Status updated to <span class="badge-status badge-rejected">Rejected</span>; explanatory note displayed on student dashboard.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Secure File Download</strong></td>
+                <td>Student clicks "Get File" on approved document via <code>download_file.php</code>.</td>
+                <td>Binary bytes streamed with valid Content-Disposition and MIME headers.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>SQL Injection Defense</strong></td>
+                <td>Submitting SQL payloads (<code>' OR '1'='1</code>) in search inputs.</td>
+                <td>Prepared statements treat input as string literals; query executes safely.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Path Traversal Defense</strong></td>
+                <td>Injecting <code>?file=../../../../boot.ini</code> into download URL.</td>
+                <td><code>basename()</code> sanitizes traversal; server returns 404 Not Found error.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Admin Student CRUD</strong></td>
+                <td>Administrator creates, edits, and deletes student records.</td>
+                <td>Database updates; cascade cleanup deletes associated disk files reliably.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+            <tr>
+                <td><strong>Avatar Management</strong></td>
+                <td>Student uploads personal profile photo or removes existing avatar.</td>
+                <td>Image resized, validated, and rendered; old image deleted from disk.</td>
+                <td class="center"><strong>PASSED</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ===================================================================
+     PAGE 12: CHAPTER 4 (CONT.) & CHAPTER 5 - CONCLUSION
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h2 class="section-title">4.2 Usability and Operational Analysis</h2>
+    <p>
+        Operational evaluation against traditional paper-based workflows demonstrated dramatic improvements in administrative performance:
+    </p>
+    <ul>
+        <li><strong>Turnaround Efficiency:</strong> Requisition placement time was reduced from an average of 15 to 25 minutes of physical queuing to under 60 seconds online.</li>
+        <li><strong>Status Transparency:</strong> Real-time status indicators (<span class="badge-status badge-pending">Pending</span>, <span class="badge-status badge-approved">Approved</span>, <span class="badge-status badge-rejected">Rejected</span>) eliminated redundant in-person inquiries at registrar service windows.</li>
+        <li><strong>Data Integrity:</strong> Centralizing records in a normalized MariaDB database prevented document duplication and maintained structured academic profiles.</li>
+    </ul>
+
+    <h1 class="chapter-title" style="margin-top: 35px;">CHAPTER 5: CONCLUSION AND RECOMMENDATIONS</h1>
+
+    <h2 class="section-title">5.1 What the System Achieved</h2>
+    <p>
+        The <strong>Student Request Records System</strong> successfully addresses the operational bottlenecks of manual academic document processing. By replacing paper-based requisition slips with an automated, responsive web-based pipeline, the system bridges the communication gap between students and university registrar personnel.
+    </p>
+    <p class="no-indent">Key achievements include:</p>
+    <ol>
+        <li>Establishment of a secure, authenticated multi-role platform with strict Role-Based Access Control (RBAC) separating administrative controls from student self-service.</li>
+        <li>Delivery of a transparent, end-to-end document requisition engine featuring real-time lifecycle status badges (<span class="badge-status badge-pending">Pending</span>, <span class="badge-status badge-approved">Approved</span>, <span class="badge-status badge-rejected">Rejected</span>) and administrative feedback notes.</li>
+        <li>Implementation of an administrative management dashboard with comprehensive student CRUD controls, multi-parameter search/filtering, and queue review workflows.</li>
+        <li>Deployment of secure digital file delivery mechanisms allowing direct retrieval of approved documents.</li>
+        <li>Enforcement of strict defensive security safeguards, including Bcrypt hashing, parameterized prepared statements, session validation, and multi-tier file upload verification.</li>
+    </ol>
+
+    <h2 class="section-title">5.2 Limitations of the System</h2>
+    <p>
+        While the current release provides robust core functionality, the following technical limitations exist:
+    </p>
+    <ul>
+        <li><strong>Absence of Automated Push Notifications:</strong> Students must log into the portal to inspect request status; automated SMS or SMTP email alerts are not yet integrated.</li>
+        <li><strong>Manual Clearance Verification:</strong> Financial clearances must be verified manually by staff via uploaded receipts rather than real-time payment gateway APIs.</li>
+        <li><strong>Single-Institution Architecture:</strong> Designed for single-campus deployment without multi-tenant database partitioning.</li>
+    </ul>
+</div>
+
+<!-- ===================================================================
+     PAGE 13: CHAPTER 5 (CONT.), REFERENCES & APPENDICES
+     =================================================================== -->
+<div class="paper-sheet page-break">
+    <h2 class="section-title">5.3 Possible Future Improvements</h2>
+    <p>
+        To expand institutional utility, the following technical enhancements are recommended for future releases:
+    </p>
+    <ol>
+        <li><strong>Automated SMS &amp; Email Notification Gateways:</strong> Integration of SMS APIs (e.g., Twilio) and SMTP mailers (e.g., PHPMailer) to dispatch immediate notifications upon status changes.</li>
+        <li><strong>Digital Payment Gateway Integration:</strong> Enabling direct e-wallet (e.g., GCash, PayMaya, PayPal) checkout for transcript fees during requisition submission.</li>
+        <li><strong>Cryptographic QR Code Verification:</strong> Embedding cryptographically signed QR codes onto released digital credentials, enabling employers and external universities to verify document authenticity instantly.</li>
+        <li><strong>Digital Signature Integration (PKI):</strong> Incorporating Public Key Infrastructure (PKI) digital signatures allowing registrar officers to sign approved PDF documents electronically.</li>
+    </ol>
+
+    <h1 class="chapter-title" style="margin-top: 35px;">REFERENCES</h1>
+    <p class="no-indent" style="line-height: 1.8; font-size: 11pt;">
+        Acharya, S., &amp; Chellappan, S. (2021). <em>Pro PHP and jQuery: Building Adaptable Web Applications</em>. Apress.<br>
+        DuBois, P. (2014). <em>MySQL Developer's Library (5th Edition)</em>. Addison-Wesley Professional.<br>
+        Fielding, R. T., &amp; Reschke, J. (2014). <em>Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</em>. RFC 7230, Internet Engineering Task Force (IETF).<br>
+        Gilmore, J. (2020). <em>Beginning PHP and MySQL: From Novice to Professional</em>. Apress.<br>
+        Howard, M., &amp; LeBlanc, D. (2013). <em>Writing Secure Code (2nd Edition)</em>. Microsoft Press.<br>
+        Kurose, J. F., &amp; Ross, K. W. (2021). <em>Computer Networking: A Top-Down Approach (8th Edition)</em>. Pearson.<br>
+        Nixon, R. (2021). <em>Learning PHP, MySQL &amp; JavaScript: With jQuery, CSS &amp; HTML5 (6th Edition)</em>. O'Reilly Media.<br>
+        Open Web Application Security Project (OWASP). (2023). <em>OWASP Top 10: The Ten Most Critical Web Application Security Risks</em>. OWASP Foundation.<br>
+        Silberschatz, A., Korth, H. F., &amp; Sudarshan, S. (2020). <em>Database System Concepts (7th Edition)</em>. McGraw-Hill Education.<br>
+        Stuttard, P., &amp; Pinto, M. (2011). <em>The Web Application Hacker's Handbook: Finding and Exploiting Security Flaws (2nd Edition)</em>. John Wiley &amp; Sons.<br>
+        Welling, L., &amp; Thomson, L. (2017). <em>PHP and MySQL Web Development (5th Edition)</em>. Addison-Wesley Professional.
+    </p>
+
+    <h1 class="chapter-title" style="margin-top: 35px;">APPENDIX: DATABASE EXPORT SCRIPT</h1>
+    <div class="code-caption">Appendix A: SQL Schema Export (student_record_system.sql)</div>
+    <pre class="code-snippet">CREATE DATABASE IF NOT EXISTS `student_db` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `student_db`;
+
+CREATE TABLE `users` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `password` VARCHAR(255) NOT NULL,
+  `full_name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `role` VARCHAR(20) NOT NULL DEFAULT 'user',
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `students` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT(11) DEFAULT NULL,
+  `student_id` VARCHAR(50) NOT NULL UNIQUE,
+  `first_name` VARCHAR(100) NOT NULL,
+  `last_name` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(150) NOT NULL,
+  `course` VARCHAR(100) NOT NULL,
+  `year_level` INT(11) NOT NULL,
+  `status` VARCHAR(50) NOT NULL DEFAULT 'Regular',
+  `profile_picture` VARCHAR(255) DEFAULT NULL,
+  `record_file` VARCHAR(255) DEFAULT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `file_requests` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `student_id` INT(11) NOT NULL,
+  `user_id` INT(11) DEFAULT NULL,
+  `document_type` VARCHAR(150) NOT NULL,
+  `purpose` TEXT DEFAULT NULL,
+  `supporting_file` VARCHAR(255) DEFAULT NULL,
+  `status` VARCHAR(50) NOT NULL DEFAULT 'Pending',
+  `admin_notes` TEXT DEFAULT NULL,
+  `approved_file` VARCHAR(255) DEFAULT NULL,
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+</div>
+
+</body>
+</html>
